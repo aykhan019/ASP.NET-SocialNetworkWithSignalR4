@@ -149,6 +149,23 @@ function GetFriends() {
 
 }
 
+function UnFollowCall(id, otherUserId) {
+
+    $.ajax({
+        url: "/Home/Unfollow/" + id,
+        method: "GET",
+        success: function (data) {
+            console.log("SUCCESSFULLY UNFOLLOWED");
+            GetMyRequests();
+            GetAllUsers();
+            SendFollowCall(id);
+        },
+        error: function (err) {
+            alert(err);
+        }
+    })
+}
+
 function GetAllUsers() {
 
     $.ajax({
@@ -169,7 +186,7 @@ function GetAllUsers() {
                 else {
                     if (data[i].isFriend) {
 
-                subContent = `<button  class='btn btn-outline-secondary'> UnFollow</button>`
+                        subContent = `<button  class='btn btn-outline-secondary' onClick=UnFollowCall('${data[i].id}')> UnFollow</button>`
                     }
                     else {
 

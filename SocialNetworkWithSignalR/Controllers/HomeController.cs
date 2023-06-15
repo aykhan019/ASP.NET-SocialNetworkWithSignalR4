@@ -188,7 +188,14 @@ namespace SocialNetworkWithSignalR.Controllers
             return Ok();
         }
 
-
-
+        public IActionResult Unfollow(string id)
+        {
+            var f = _dbContext.Friends.ToList();
+            var results = _dbContext.Friends.Where(f => f.OwnId == id || f.YourFriendId == id).ToArray();
+            _dbContext.Friends.RemoveRange(results);
+            _dbContext.SaveChanges();
+            var a  = _dbContext.Friends.ToList();
+            return Ok();
+        }    
     }
 }
